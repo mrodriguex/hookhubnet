@@ -2,12 +2,35 @@ using System.Net.WebSockets;
 
 namespace HookHubNet.Common;
 
+/// <summary>
+/// Provides static methods for handling the tunnel protocol over WebSocket connections.
+/// The protocol uses binary frames with a type byte, a 16-byte GUID for tunnel ID, and a payload.
+/// </summary>
 public static class TunnelProtocol
 {
+    /// <summary>
+    /// Frame type for opening a tunnel.
+    /// </summary>
     public const byte OPEN  = 1;
+
+    /// <summary>
+    /// Frame type for sending data through a tunnel.
+    /// </summary>
     public const byte DATA  = 2;
+
+    /// <summary>
+    /// Frame type for closing a tunnel.
+    /// </summary>
     public const byte CLOSE = 3;
 
+    /// <summary>
+    /// Sends a frame over the WebSocket with the specified type, tunnel ID, and payload.
+    /// </summary>
+    /// <param name="ws">The WebSocket to send the frame on.</param>
+    /// <param name="type">The frame type (OPEN, DATA, or CLOSE).</param>
+    /// <param name="tunnelId">The unique identifier of the tunnel.</param>
+    /// <param name="payload">The payload data to send.</param>
+    /// <returns>A task representing the asynchronous send operation.</returns>
     public static async Task SendFrame(
         WebSocket ws,
         byte type,
@@ -27,6 +50,12 @@ public static class TunnelProtocol
         );
     }
 
+    /// <summary>
+    /// Receives a frame from the WebSocket and parses it into type, tunnel ID, and payload.
+    /// </summary>
+    /// <param name="ws">The WebSocket to receive the frame from.</param>
+    /// <returns>A tuple containing the frame type, tunnel ID, and payload.</returns>
+    /// <exception cref="WebSocketException">Thrown if the WebSocket is closed.</exception>
     public static async Task<(byte type, Guid tunnelId, byte[] payload)>
         ReceiveFrame(WebSocket ws)
     {

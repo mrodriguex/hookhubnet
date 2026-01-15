@@ -7,17 +7,28 @@ using HookHubNet.Common.DTOs;
 
 namespace HookHubNet.Hub.Controllers;
 
+/// <summary>
+/// Controller for handling WebSocket connections from hooks and managing TCP tunnels.
+/// </summary>
 [ApiController]
 [Route("hookhubnet")]
 public class HookHubNetController : ControllerBase
 {
     private readonly TunnelRegistry _registry;
-    
+
+    /// <summary>
+    /// Initializes a new instance of the HookHubNetController.
+    /// </summary>
+    /// <param name="registry">The tunnel registry for managing hooks and tunnels.</param>
     public HookHubNetController(TunnelRegistry registry)
     {
         _registry = registry;
     }
 
+    /// <summary>
+    /// Handles WebSocket connections from hooks, assigns ports, and manages tunnel operations.
+    /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [HttpGet]
     public async Task Get()
     {
@@ -84,6 +95,13 @@ public class HookHubNetController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Handles incoming TCP clients for a specific hook by accepting connections and creating tunnels.
+    /// </summary>
+    /// <param name="hookId">The ID of the hook.</param>
+    /// <param name="hookInfo">The hook information including the listener.</param>
+    /// <param name="token">Cancellation token for stopping the operation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     private async Task HandleTcpClientsForHook(string hookId, HookInfo hookInfo, CancellationToken token)
     {
         try
@@ -100,6 +118,12 @@ public class HookHubNetController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Handles an individual TCP client connection by creating a tunnel and forwarding data.
+    /// </summary>
+    /// <param name="client">The connected TCP client.</param>
+    /// <param name="hook">The WebSocket connection to the hook.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     private async Task HandleClient(TcpClient client, WebSocket hook)
     {
         var clientStream = client.GetStream();

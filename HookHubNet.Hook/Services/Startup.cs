@@ -3,12 +3,21 @@ using Microsoft.Extensions.Logging;
 
 namespace HookHubNet.Hook.Services;
 
+/// <summary>
+/// Handles the startup and execution of the HookHub Hook application, managing multiple hook clients.
+/// </summary>
 public class Startup
 {
     private readonly ILogger<HookHubClient> _logger;
     private readonly string _hubUrl;
     private readonly List<HookConfig> _hooks;
 
+    /// <summary>
+    /// Initializes a new instance of the Startup class.
+    /// </summary>
+    /// <param name="logger">The logger for HookHubClient.</param>
+    /// <param name="hubUrl">The URL of the HookHub hub.</param>
+    /// <param name="hooks">The list of hook configurations.</param>
     public Startup(ILogger<HookHubClient> logger, string hubUrl, List<HookConfig> hooks)
     {
         _logger = logger;
@@ -16,6 +25,10 @@ public class Startup
         _hooks = hooks;
     }
 
+    /// <summary>
+    /// Runs the application, starting all hook clients and handling shutdown.
+    /// </summary>
+    /// <returns>The exit code (0 for success, 1 for error).</returns>
     public async Task<int> RunAsync()
     {
         // Log startup information
