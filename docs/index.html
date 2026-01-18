@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HookHubNet — Secure Reverse Tunneling</title>
+  <title>HookHubNet — TCP Tunneling via WebSockets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
 </head>
 <body>
 
@@ -12,49 +19,200 @@
   <nav class="nav">
     <div class="logo">HookHubNet</div>
     <div class="nav-links">
+      <button class="close-btn" id="close-menu-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <a href="#features">Features</a>
+      <a href="#overview">Overview</a>
+      <a href="#tech">Tech Stack</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#usage">Usage</a>
+      <a href="#security">Security</a>
       <a href="#screenshots">Screenshots</a>
+      <a href="#get-started">Get Started</a>
       <a href="#docs">Docs</a>
       <a href="https://github.com/mrodriguex/hookhubnet" target="_blank">GitHub</a>
+    </div>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </nav>
 
   <div class="hero-content">
-    <h1>Expose Local Services Securely</h1>
+    <h1>Secure TCP Tunneling via WebSockets</h1>
     <p>
-      HookHubNet is a modern reverse-tunneling platform built with .NET and YARP.
-      Create secure tunnels using subdomains — no port forwarding required.
+      HookHubNet is a tunneling system that enables secure forwarding of TCP traffic through WebSocket connections.
+      It consists of a central hub that manages connections from multiple hooks, each forwarding traffic to backend services.
     </p>
     <div class="hero-buttons">
       <a class="btn primary" href="#get-started">Get Started</a>
       <a class="btn secondary" href="https://github.com/mrodriguex/hookhubnet">View Source</a>
     </div>
+    <div class="social-buttons">
+      <a href="https://github.com/mrodriguex/hookhubnet" target="_blank" class="social-btn" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+        </svg>
+      </a>
+      <a href="#" target="_blank" class="social-btn" title="Twitter">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+        </svg>
+      </a>
+      <a href="#" target="_blank" class="social-btn" title="LinkedIn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 </header>
 
 <section id="features" class="section">
-  <h2>Why HookHubNet?</h2>
+  <h2>Key Features</h2>
   <div class="features">
     <div class="feature">
-      <h3>Dynamic Subdomains</h3>
-      <p>Each tunnel is mapped automatically using subdomain routing.</p>
+      <h3>WebSocket-based Tunneling</h3>
+      <p>Secure forwarding of TCP traffic through WebSocket connections.</p>
     </div>
     <div class="feature">
-      <h3>Built on YARP</h3>
-      <p>High-performance reverse proxy using Microsoft YARP.</p>
+      <h3>Dynamic Port Assignment</h3>
+      <p>Automatic assignment of unique TCP ports for each hook.</p>
     </div>
     <div class="feature">
-      <h3>Zero Config Clients</h3>
-      <p>No firewall rules or NAT configuration needed.</p>
+      <h3>Concurrent Tunnel Management</h3>
+      <p>Efficient handling of multiple simultaneous tunnels.</p>
     </div>
     <div class="feature">
-      <h3>WebSockets Ready</h3>
-      <p>Supports real-time protocols out of the box.</p>
+      <h3>REST API for Management</h3>
+      <p>Endpoints to query and manage connected hooks.</p>
     </div>
   </div>
 </section>
 
-<section id="screenshots" class="section alt">
+<section id="overview" class="section">
+  <h2>Functionality Overview</h2>
+  <p>
+    The system operates by having hooks connect to a central hub via WebSockets. Each hook is assigned a unique TCP port on the hub. Incoming TCP connections to these ports are tunneled through the WebSocket to the hook, which then forwards the traffic to the configured backend service. This allows exposing local services securely without direct network exposure.
+  </p>
+</section>
+
+<section id="tech" class="section alt">
+  <h2>Technology Stack</h2>
+  <ul>
+    <li><strong>Programming Language</strong>: C#</li>
+    <li><strong>Frameworks</strong>: .NET 10, ASP.NET Core</li>
+    <li><strong>Libraries</strong>: System.Net.WebSockets, System.Net.Sockets</li>
+    <li><strong>External Services</strong>: None</li>
+  </ul>
+</section>
+
+<section id="architecture" class="section">
+  <h2>Architecture</h2>
+  <h3>High-level Architecture Description</h3>
+  <p>HookHubNet follows a client-server architecture with a hub-and-spoke model:</p>
+  
+  <div class="architecture-image">
+    <img src="assets/images/architecture.png" alt="HookHubNet Architecture Diagram" />
+  </div>
+  
+  <p>Diagram showing the hub-and-spoke architecture with WebSocket connections between hooks and hub, and TCP tunnels to backends.</p>
+  <h3>Component Responsibilities</h3>
+  <ul>
+    <li><strong>HookHubNet.Hub</strong>: Handles WebSocket upgrades, assigns ports, manages tunnel registry, and forwards data.</li>
+    <li><strong>HookHubNet.Hook</strong>: Establishes WebSocket connection to hub, receives tunnel commands, and forwards TCP traffic to backends.</li>
+    <li><strong>HookHubNet.Common</strong>: Shared data transfer objects, models, and protocol utilities.</li>
+  </ul>
+  <h3>Authentication / Authorization Flow</h3>
+  <p>No authentication or authorization is currently implemented. Connections are accepted based on hook ID query parameter.</p>
+  <h3>Solution / Repository Organization</h3>
+  <ul>
+    <li><code>HookHubNet.sln</code>: Solution file containing all projects.</li>
+    <li><code>HookHubNet.Common/</code>: Shared library with DTOs, models, and protocol handling.</li>
+    <li><code>HookHubNet.Hub/</code>: ASP.NET Core web application for the central hub.</li>
+    <li><code>HookHubNet.Hook/</code>: Console application for hook clients.</li>
+    <li><code>HookHubNet.Proxy/</code>: Legacy project (deprecated).</li>
+  </ul>
+</section>
+
+<section id="usage" class="section alt">
+  <h2>Usage Examples</h2>
+  <h3>API Examples</h3>
+  <ul>
+    <li><strong>Get all hooks</strong>: <code>curl http://localhost:5000/hook/getall</code></li>
+    <li><strong>Get hook info</strong>: <code>curl http://localhost:5000/hook/get/webhook</code></li>
+    <li><strong>Remove hook</strong>: <code>curl http://localhost:5000/hook/remove/webhook</code></li>
+  </ul>
+  <h3>Web Usage Examples</h3>
+  <p>Hooks connect via WebSocket: <code>ws://localhost:5000/hookhubnet?id=webhook</code></p>
+  <p>Once connected, TCP traffic to the assigned port is forwarded to the hook's backend.</p>
+  <h3>Test Cases</h3>
+  <p>No automated tests are currently implemented. Manual testing involves:</p>
+  <ul>
+    <li>Starting the hub and verifying WebSocket acceptance.</li>
+    <li>Connecting a hook and checking port assignment.</li>
+    <li>Sending TCP traffic to the assigned port and verifying forwarding to the backend.</li>
+  </ul>
+  <p>Example test scenario: Use <code>telnet</code> or <code>nc</code> to connect to the hub's assigned port and observe data forwarding.</p>
+</section>
+
+<section id="security" class="section">
+  <h2>Security Considerations</h2>
+  <ul>
+    <li>WebSocket connections are unencrypted; use HTTPS/WSS in production.</li>
+    <li>No authentication; implement API keys or certificates for production use.</li>
+    <li>Ensure proper firewall rules to restrict access to hub ports.</li>
+    <li>Validate hook IDs to prevent unauthorized connections.</li>
+  </ul>
+</section>
+
+<section id="deployment" class="section alt">
+  <h2>Deployment Notes</h2>
+  <p>Deploy the hub as a standard ASP.NET Core application using IIS, Nginx, or Docker. Hooks can run as console applications or services. Ensure network connectivity between hub and hooks. Use reverse proxies for SSL termination.</p>
+</section>
+
+<section id="roadmap" class="section">
+  <h2>Roadmap / Future Improvements</h2>
+  <ul>
+    <li>Implement authentication and authorization.</li>
+    <li>Add encryption for WebSocket traffic.</li>
+    <li>Support for UDP tunneling.</li>
+    <li>Web-based management interface.</li>
+    <li>Comprehensive test suite.</li>
+  </ul>
+</section>
+
+<section id="contribution" class="section alt">
+  <h2>Contribution Guidelines</h2>
+  <ol>
+    <li>Fork the repository.</li>
+    <li>Create a feature branch.</li>
+    <li>Make changes with clear commit messages.</li>
+    <li>Submit a pull request with description of changes.</li>
+    <li>Ensure code follows .NET coding standards.</li>
+  </ol>
+</section>
+
+<section id="troubleshooting" class="section">
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li><strong>Hook connection fails</strong>: Check hub URL and network connectivity.</li>
+    <li><strong>Port conflicts</strong>: Ensure assigned ports are available.</li>
+    <li><strong>Data not forwarding</strong>: Verify backend service is running and accessible.</li>
+    <li><strong>WebSocket errors</strong>: Check for firewall blocking WebSocket traffic.</li>
+  </ul>
+</section>
+
+<section id="notes" class="section alt">
+  <h2>Additional Notes</h2>
+  <p>This is a development version; production deployment requires security hardening.</p>
+</section>
+
+<section id="screenshots" class="section">
   <h2>Interface Preview</h2>
   <p class="section-subtitle">Early-stage UI — evolving fast</p>
 
@@ -66,36 +224,58 @@
 </section>
 
 <section id="get-started" class="section">
-  <h2>Get Started in Minutes</h2>
-
-  <div class="steps">
-    <div class="step">
-      <span>1</span>
-      <p>Clone the repository</p>
-    </div>
-    <div class="step">
-      <span>2</span>
-      <p>Run the proxy server</p>
-    </div>
-    <div class="step">
-      <span>3</span>
-      <p>Expose your local service</p>
-    </div>
+  <h2>Get Started</h2>
+  <h3>Prerequisites</h3>
+  <ul>
+    <li>.NET 10 SDK</li>
+    <li>Access to network ports for TCP listeners</li>
+  </ul>
+  <h3>Clone Repository</h3>
+  <div class="code-container">
+    <pre><code class="language-bash">git clone https://github.com/mrodriguex/hookhubnet.git
+cd hookhubnet</code></pre>
+    <button class="copy-btn" onclick="copyToClipboard(this.previousElementSibling)">Copy</button>
   </div>
-
-  <pre class="code">
-git clone https://github.com/mrodriguex/hookhubnet.git
-cd hookhubnet
-dotnet run
-  </pre>
+  <h3>Configuration</h3>
+  <p>Configuration is managed via <code>appsettings.json</code> files:</p>
+  <ul>
+    <li><strong>HookHubNet.Hub</strong>: Standard ASP.NET Core configuration.</li>
+    <li><strong>HookHubNet.Hook</strong>: Configure <code>HubUrl</code> and <code>Hooks</code> array.</li>
+  </ul>
+  <p>Example <code>appsettings.json</code> for HookHubNet.Hook:</p>
+  <div class="code-container">
+    <pre><code class="language-json">{
+  "HubUrl": "ws://localhost:5201/hookhubnet",
+  "Hooks": [
+    {
+      "HookId": "webhook",
+      "TargetHost": "localhost",
+      "TargetPort": 8080
+    }
+  ]
+}</code></pre>
+    <button class="copy-btn" onclick="copyToClipboard(this.previousElementSibling)">Copy</button>
+  </div>
+  <p>Environment variables can override settings.</p>
+  <h3>Build Instructions</h3>
+  <div class="code-container">
+    <pre><code class="language-bash">dotnet build HookHubNet.sln</code></pre>
+    <button class="copy-btn" onclick="copyToClipboard(this.previousElementSibling)">Copy</button>
+  </div>
+  <h3>Run Instructions</h3>
+  <ol>
+    <li>Start the hub: <code>dotnet run --project HookHubNet.Hub</code></li>
+    <li>Start a hook: <code>dotnet run --project HookHubNet.Hook</code></li>
+  </ol>
+  <p>The hub runs on the configured port (default 5000), and hooks connect via WebSocket.</p>
 </section>
 
 <section id="docs" class="section alt">
   <h2>Documentation</h2>
   <p>
-    Full documentation, architecture diagrams, and examples are available in the repository.
+    Full documentation, architecture details, and usage examples are available in the README.
   </p>
-  <a class="btn primary" href="https://github.com/mrodriguex/hookhubnet#readme">
+  <a class="btn primary" href="../README.md">
     Read the Docs
   </a>
 </section>
@@ -106,6 +286,77 @@ dotnet run
     Maintainer: Manuel Rodríguez Camacho
   </p>
 </footer>
+
+<script>
+function copyToClipboard(element) {
+  const code = element.textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = element.nextElementSibling;
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+  });
+}
+
+// Hamburger menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const closeBtn = document.getElementById('close-menu-btn');
+  
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+  
+  // Close menu when clicking on close button
+  closeBtn.addEventListener('click', function() {
+    hamburger.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
+  
+  // Close menu when clicking on a link
+  navLinks.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A') {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+  });
+});
+
+// Go up button functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const goUpBtn = document.getElementById('go-up-btn');
+  
+  // Show/hide button based on scroll position
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      goUpBtn.classList.add('visible');
+    } else {
+      goUpBtn.classList.remove('visible');
+    }
+  });
+  
+  // Scroll to top when clicked
+  goUpBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
+
+<button id="go-up-btn" class="go-up-btn" title="Go to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
 
 </body>
 </html>

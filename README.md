@@ -61,7 +61,7 @@ No authentication or authorization is currently implemented. Connections are acc
 ### Clone Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/mrodriguex/hookhubnet.git
 cd hookhubnet
 ```
 
