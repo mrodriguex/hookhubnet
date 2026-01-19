@@ -1,16 +1,16 @@
 :root {
-  --bg: #f8f9fa;
-  --bg-alt: #e9ecef;
-  --bg-card: #ffffff;
-  --text: #212529;
-  --text-muted: #6c757d;
-  --primary: #007bff;
-  --primary-dark: #0056b3;
-  --accent: #28a745;
-  --accent-dark: #1e7e34;
-  --border: #dee2e6;
-  --success: #28a745;
-  --warning: #ffc107;
+  --bg: #1e293b;
+  --bg-alt: #334155;
+  --bg-card: #475569;
+  --text: #ffffff;
+  --text-muted: #cbd5e1;
+  --primary: #60a5fa;
+  --primary-dark: #3b82f6;
+  --accent: #06b6d4;
+  --accent-dark: #0891b2;
+  --border: #64748b;
+  --success: #10b981;
+  --warning: #f59e0b;
 }
 
 * {
@@ -223,6 +223,12 @@ body {
   animation-delay: 0.2s;
 }
 
+.section.card {
+  padding: 3rem 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
 .section:nth-child(even) {
   animation-delay: 0.4s;
 }
@@ -256,6 +262,14 @@ body {
 
 .section.alt {
   background: var(--bg-alt);
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
 }
 
 .features {
@@ -423,6 +437,25 @@ body {
 }
 
 .architecture-image img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.overview-image {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.overview-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.overview-image img:hover {
   transform: scale(1.02);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
