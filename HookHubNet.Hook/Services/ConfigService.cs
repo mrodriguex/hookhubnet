@@ -33,7 +33,7 @@ public class ConfigService
     /// Gets the URL of the HookHub hub from configuration.
     /// </summary>
     /// <returns>The hub URL, defaulting to "ws://localhost:5201/hook" if not configured.</returns>
-    public string GetHubUrl() => _config["HubUrl"] ?? "ws://localhost:5201/hook";
+    public string GetHubUrl() => _config["HubUrl"] ?? "ws://localhost:5201/hookhubnet";
 
     /// <summary>
     /// Gets the list of hook configurations from the configuration.
