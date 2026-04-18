@@ -245,16 +245,6 @@ main {
     letter-spacing: 0.5px;
 }
 
-.skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-.skill-category {
-    flex: 1 1 180px;
-}
-
 .skill-category h3 {
     margin-bottom: 0.3rem;
     color: #0d6efd;
